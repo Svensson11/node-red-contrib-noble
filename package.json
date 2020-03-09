@@ -21,21 +21,5 @@
         "nodes": {
             "noble": "noble/node-red-contrib-noble.js"
         }
-    },
-    "author": {
-        "name": "Carlos Pedrinaci",
-        "email": "",
-        "url": "http://www.cpedrinaci.net"
-    },
-    "contributors": [{
-            "name": "Charalampos Doukas",
-            "email": "",
-            "url": "http://blog.buildinginternetofthings.com"
-        },
-        {
-            "name": "Mike Blackstock",
-            "email": "",
-            "url": "http://www.mblackstock.com"
-        }
-    ]
+    }
 }
