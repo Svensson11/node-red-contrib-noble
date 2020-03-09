@@ -24,17 +24,17 @@
     },
     "author": {
         "name": "Carlos Pedrinaci",
-        "email": "carlos.pedrinaci@open.ac.uk",
+        "email": "",
         "url": "http://www.cpedrinaci.net"
     },
     "contributors": [{
             "name": "Charalampos Doukas",
-            "email": "charalampos.doukas@create-net.org",
+            "email": "",
             "url": "http://blog.buildinginternetofthings.com"
         },
         {
             "name": "Mike Blackstock",
-            "email": "mike@mblackstock.com",
+            "email": "",
             "url": "http://www.mblackstock.com"
         }
     ]
