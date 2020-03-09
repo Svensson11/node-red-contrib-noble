@@ -23,19 +23,19 @@
 module.exports = function(RED) {
     "use strict";
 
-    var noble = require('noble');
+    var noble = require('@abandonware/noble');
     var os = require('os');
-    
+
     // The main node definition - most things happen in here
     function NobleScan(n) {
         // Create a RED node
-        RED.nodes.createNode(this,n);
+        RED.nodes.createNode(this, n);
 
         // Store local copies of the node configuration (as defined in the .html)
         this.duplicates = n.duplicates;
         this.uuids = [];
         if (n.uuids != undefined && n.uuids !== "") {
-            this.uuids = n.uuids.split(',');    //obtain array of uuids
+            this.uuids = n.uuids.split(','); //obtain array of uuids
         }
 
         var node = this;
@@ -43,7 +43,7 @@ module.exports = function(RED) {
         var scanning = false;
 
         noble.on('discover', function(peripheral) {
-            var msg = { payload:{peripheralUuid:peripheral.uuid, localName: peripheral.advertisement.localName} };
+            var msg = { payload: { peripheralUuid: peripheral.uuid, localName: peripheral.advertisement.localName } };
             msg.peripheralUuid = peripheral.uuid;
             msg.localName = peripheral.advertisement.localName;
             msg.detectedAt = new Date().getTime();
@@ -100,7 +100,7 @@ module.exports = function(RED) {
                 // start the scan
                 noble.startScanning(node.uuids, node.duplicates, function() {
                     node.log("Scanning for BLEs started. UUIDs: " + node.uuids + " - Duplicates allowed: " + node.duplicates);
-                    node.status({fill:"green",shape:"dot",text:"started"});
+                    node.status({ fill: "green", shape: "dot", text: "started" });
                     node.scanning = true;
                 });
             }
@@ -120,7 +120,7 @@ module.exports = function(RED) {
                 // stop the scan
                 noble.stopScanning(function() {
                     node.log('BLE scanning stopped.');
-                    node.status({fill:"red",shape:"ring",text:"stopped"});
+                    node.status({ fill: "red", shape: "ring", text: "stopped" });
                     node.scanning = false;
                 });
                 if (error) {
@@ -153,7 +153,7 @@ module.exports = function(RED) {
             };
 
             // TODO: Catch a global event instead eventually
-            setTimeout(function(){
+            setTimeout(function() {
                 node.send(msg);
             }, 3000);
 
@@ -161,7 +161,7 @@ module.exports = function(RED) {
         }
 
         // control scanning
-        node.on('input', function (msg) {
+        node.on('input', function(msg) {
             if (msg.hasOwnProperty("payload") && typeof msg.payload == "object" && msg.payload.hasOwnProperty("scan")) {
                 if (msg.payload.scan === true) {
                     startScan(false, false);
@@ -174,7 +174,7 @@ module.exports = function(RED) {
             node.warn("Incorrect input, ignoring. See the documentation in the info tab. ");
         });
 
-    
+
         node.on("close", function() {
             // Called when the node is shutdown - eg on redeploy.
             // Allows ports to be closed, connections dropped etc.
@@ -185,9 +185,9 @@ module.exports = function(RED) {
         });
 
     }
-    
+
     // Register the node by name. This must be called before overriding any of the
     // Node functions.
-    RED.nodes.registerType("scan ble",NobleScan);
+    RED.nodes.registerType("scan ble", NobleScan);
 
 }
